@@ -27,8 +27,9 @@ while 1:
         bird.fall()
         update_mouse = True
 
+    bird.check_alive() # Bird hits top or bottom of screen
+    bird.is_aliv *= p.no_collision(bird)
     # Update bird if it is alive
-    bird.check_alive()
     if bird.is_alive:
         bird.update()
         p.update()
