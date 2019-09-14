@@ -15,7 +15,7 @@ from pipe_list import PipeList
 pygame.init()
 screen = pygame.display.set_mode((config.WIDTH, config.HEIGHT))
 # Game variables
-bird = Bird(color=config.BIRD_COLOR)
+b = BirdList()
 p = PipeList()
 update_mouse = True
 
@@ -33,20 +33,20 @@ while 1:
         bird.fall()
         update_mouse = True
 
-    bird.check_alive() # Bird hits top or bottom of screen
+    b.check_alive() # Bird hits top or bottom of screen
     bird.is_alive *= p.no_collision(bird)
     # Update bird if it is alive
     if bird.is_alive:
         pipe_info = p.update()
-        bird.update(pipe_info)
+        b.update(pipe_info)
     else:
         pygame.time.wait(500)
-        bird = Bird(color=config.BIRD_COLOR)
+        b = Bird(color=config.BIRD_COLOR)
         p = PipeList()
 
     # Draw, and wait
     screen.fill(config.BACKGROUND_COLOR)
     p.draw(screen)
-    bird.draw(screen)
+    b.draw(screen)
     pygame.display.flip()
     pygame.time.wait(16)

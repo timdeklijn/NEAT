@@ -31,12 +31,13 @@ class PipeList():
                 self.l.append(Pipe())
             self.l[i].update()
         if len(self.l) == 1:
+            # Return something when there is only one pipe present
             return (self.l[0].x,
-                    None,
+                    int(config.WIDTH),
                     self.l[0].y_top,
-                    None,
+                    int(config.HEIGHT/2),
                     self.l[0].y_bottom,
-                    None)
+                    int(config.HEIGHT/2))
         else:
             return (self.l[0].x,
                     self.l[1].x,
