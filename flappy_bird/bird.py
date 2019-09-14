@@ -15,9 +15,9 @@ class Bird():
 
     def draw(self, screen):
         pygame.draw.circle(
-            screen, 
-            self.color, 
-            (self.x, self.y), 
+            screen,
+            self.color,
+            (self.x, self.y),
             self.radius)
 
     def jump(self):

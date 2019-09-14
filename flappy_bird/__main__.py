@@ -28,11 +28,15 @@ while 1:
         update_mouse = True
 
     bird.check_alive() # Bird hits top or bottom of screen
-    bird.is_aliv *= p.no_collision(bird)
+    bird.is_alive *= p.no_collision(bird)
     # Update bird if it is alive
     if bird.is_alive:
         bird.update()
         p.update()
+    else:
+        pygame.time.wait(500)
+        bird = Bird(color=config.BIRD_COLOR)
+        p = PipeList()
 
     # Draw, and wait
     screen.fill(config.BACKGROUND_COLOR)
