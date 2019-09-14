@@ -31,7 +31,8 @@ class Bird():
         if self.y - self.radius <= 0 or self.y + self.radius >= config.HEIGHT:
             self.is_alive = False
 
-    def update(self):
+    def update(self, pipe_info):
+        print(pipe_info)
         self.velocity += self.acceleration
         self.y += int(self.velocity)
         self.acceleration = 0

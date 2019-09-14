@@ -1,3 +1,9 @@
+# NN inputs:
+# bird.y
+# pipe.x
+# pipe.y_top
+# pipe.y_bottom
+
 import sys
 import pygame
 
@@ -31,8 +37,8 @@ while 1:
     bird.is_alive *= p.no_collision(bird)
     # Update bird if it is alive
     if bird.is_alive:
-        bird.update()
-        p.update()
+        pipe_info = p.update()
+        bird.update(pipe_info)
     else:
         pygame.time.wait(500)
         bird = Bird(color=config.BIRD_COLOR)

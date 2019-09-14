@@ -14,10 +14,12 @@ class PipeList():
         self.l = [Pipe()]
 
 
-    def update(self) -> None:
+    def update(self):
         """
         update pipe positions, add new pipes when a pipe is at
         half scrteen and remove a pipe the has gone off-screen
+
+        :returns: x and y positions of the first two pipes
         """
         for i in range(len(self.l)-1, -1, -1):
             # Remove pip if it is off screen
@@ -28,6 +30,21 @@ class PipeList():
                 self.l[i].x >= (config.WIDTH /2) - (config.PIPE_SPEED / 2)):
                 self.l.append(Pipe())
             self.l[i].update()
+        if len(self.l) == 1:
+            return (self.l[0].x,
+                    None,
+                    self.l[0].y_top,
+                    None,
+                    self.l[0].y_bottom,
+                    None)
+        else:
+            return (self.l[0].x,
+                    self.l[1].x,
+                    self.l[0].y_top,
+                    self.l[1].y_top,
+                    self.l[0].y_bottom,
+                    self.l[1].y_bottom)
+
 
 
     def draw(self, screen) -> None:
