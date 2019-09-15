@@ -16,7 +16,7 @@ class BirdList():
             b.update(pipe_info)
 
     def draw(self, screen):
-        for b in self.alive + self.dead:
+        for b in self.alive:
             b.draw(screen)
 
     def check_alive(self, pipe_list):
@@ -47,7 +47,7 @@ class BirdList():
                 weights_list.append(l.get_weights())
             weights_list = self.mutate(weights_list)
             b.change_weights(weights_list)
-            b.reset_position()
+            b.reset_bird()
             self.alive.append(b)
         self.dead = []
 

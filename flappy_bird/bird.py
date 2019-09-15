@@ -23,7 +23,6 @@ class Bird():
         self.gravity_force = config.GRAVITY / config.BIRD_MASS
         self.velocity = 0
         self.acceleration = 0
-        self.is_alive = True
         self.score = 0
         self.create_NN()
 
@@ -34,20 +33,20 @@ class Bird():
         # outputs a layer with 7*[21] weights
         self.model.add(Dense(32, input_dim=7, activation="relu"))
         # outputs a layer wit 32*[1] weights
-        self.model.add(Dense(1, input_dim=32, activation="softmax"))
+        self.model.add(Dense(1, input_dim=32, activation="softplus"))
         self.model.compile(loss="categorical_crossentropy",
                            optimizer=Adam(),
                            metrics=["accuracy"])
 
 
     def change_weights(self, weights):
-        print("new weights")
         for i, layer in enumerate(self.model.layers):
             layer.set_weights(weights[i])
 
 
-    def reset_position(self):
+    def reset_bird(self):
         self.y = int(config.HEIGHT/2.0)
+        self.velocity = 0
 
 
     def draw(self, screen):
@@ -82,9 +81,9 @@ class Bird():
         """
         self.score += 1
         # Create NN input
-        nn_input = np.array([[self.y] + [i for i in pipe_info]])
+        nn_input = np.array([[self.y] + [i for i in pipe_info]], dtype=np.float32)
         # Based on NN output, jump or not
-        if self.model.predict(nn_input)[0,0] == 1.0 and self.velocity >= 0.0:
+        if self.model.predict(nn_input)[0,0] > 0.5 and self.velocity >= 0.0:
             self.acceleration += config.JUMP_FORCE
         else:
             self.acceleration += self.gravity_force
