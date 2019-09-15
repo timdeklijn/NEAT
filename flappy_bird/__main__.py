@@ -34,8 +34,8 @@ while 1:
     # Reset ===================================================================
 
     if len(bird_list.alive) == 0:
-        pygame.time.wait(500)
-        bird_list = BirdList()
+        # pygame.time.wait(500)
+        bird_list.next_generation()
         pipe_list = PipeList()
 
     # Draw Frame ==============================================================
