@@ -1,6 +1,7 @@
 import keras
 import gc
 import numpy as np
+import copy
 
 from bird import Bird
 import config
@@ -27,26 +28,28 @@ class BirdList():
                 self.alive.pop(i)
 
     def mutate(self, weights_list):
-        chance = 0.5
-        mutate_range = 0.5
+        chance = 0.05
+        mutate_range = 0.1
         new_weights_list = []
         for weights in weights_list:
             new_weights = []
             for w in weights:
-                np.where(
-                    np.random.random(size=w.shape) < chance, w,
-                    np.random.random(size=w.shape) * mutate_range - (mutate_range * 2))
+                rand_weights = (np.random.random(size=w.shape) - 0.5) * mutate_range
+                w = np.where(np.random.random(size=w.shape) < chance, w, w + rand_weights)
                 new_weights.append(w)
             new_weights_list.append(new_weights)
         return new_weights_list
 
     def next_generation(self):
-        for b in self.dead:
-            weights_list = []
-            for l in b.model.layers:
-                weights_list.append(l.get_weights())
-            weights_list = self.mutate(weights_list)
-            b.change_weights(weights_list)
+        self.dead.sort(key=lambda b: b.score, reverse=True)
+        print(f"Max score: {self.dead[0].score}")
+        weights_list = []
+        weights_list = [np.array(l.get_weights()) for l in self.dead[0].model.layers]
+        self.alive.append(self.dead[0])
+        self.alive[0].reset_bird()
+        for b in self.dead[1:]:
+            bird_weights_list = self.mutate(weights_list)
+            b.change_weights(bird_weights_list)
             b.reset_bird()
             self.alive.append(b)
         self.dead = []

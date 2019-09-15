@@ -26,26 +26,11 @@ class PipeList():
             if self.l[i].x <= 0 - config.PIPE_WIDTH:
                 self.l.pop(i)
             # Add a pipe if one is halfway
-            if (self.l[i].x <= config.WIDTH / 2 and
-                self.l[i].x >= (config.WIDTH /2) - (config.PIPE_SPEED / 2)):
+            if (self.l[i].x <= config.WIDTH / 4 and
+                self.l[i].x >= (config.WIDTH /4) - (config.PIPE_SPEED / 2)):
                 self.l.append(Pipe())
             self.l[i].update()
-        if len(self.l) == 1:
-            # Return something when there is only one pipe present
-            return (self.l[0].x,
-                    int(config.WIDTH),
-                    self.l[0].y_top,
-                    int(config.HEIGHT/2),
-                    self.l[0].y_bottom,
-                    int(config.HEIGHT/2))
-        else:
-            return (self.l[0].x,
-                    self.l[1].x,
-                    self.l[0].y_top,
-                    self.l[1].y_top,
-                    self.l[0].y_bottom,
-                    self.l[1].y_bottom)
-
+        return(self.l[0].x, self.l[0].y_top, self.l[0].y_bottom)
 
 
     def draw(self, screen) -> None:

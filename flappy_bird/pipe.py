@@ -8,7 +8,7 @@ class Pipe():
     def __init__(self):
         self.x = config.WIDTH
         self.y = random.randint(config.HALF_GAP_SIZE + config.PIPE_MARGIN,
-                                config.HEIGHT - config.PIPE_MARGIN)
+                                config.HEIGHT - config.PIPE_MARGIN - config.HALF_GAP_SIZE)
         self.y_bottom = self.y + config.HALF_GAP_SIZE
         self.y_top = self.y - config.HALF_GAP_SIZE
 
