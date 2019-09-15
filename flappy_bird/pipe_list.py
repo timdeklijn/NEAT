@@ -58,7 +58,7 @@ class PipeList():
             p.draw(screen)
 
 
-    def no_collision(self, bird) -> bool:
+    def check_collision(self, bird) -> bool:
         """
         Detect collision with bird objects for all pipes in
         the pipelist
@@ -75,5 +75,5 @@ class PipeList():
             y_col_1 = bird.y + config.CIRCLE_RADIUS >= p.y_bottom
             y_col_2 = bird.y - config.CIRCLE_RADIUS <= p.y_top
             if x_col and (y_col_1 or y_col_2):
-               return False
-        return True
+               return True
+        return False
