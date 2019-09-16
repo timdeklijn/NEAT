@@ -42,6 +42,7 @@ while 1:
         # pygame.time.wait(500)
         bird_list.next_generation()
         pipe_list = PipeList()
+        gen_num += 1
 
     # Draw Frame ==============================================================
 
@@ -55,5 +56,4 @@ while 1:
     screen.blit(text, text_rect)
     pygame.display.flip()
     pygame.time.wait(10)
-    gen_num += 1
 
