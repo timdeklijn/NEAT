@@ -13,11 +13,11 @@ class Bird():
     draw the bird.
     """
 
-    def __init__(self, color):
+    def __init__(self, image):
         """
         :param color: rgb bird color
         """
-        self.color = color
+        self.image = image
         self.x = 2 * config.CIRCLE_RADIUS
         self.y = int(config.HEIGHT/2.0)
         self.radius = config.CIRCLE_RADIUS
@@ -58,11 +58,11 @@ class Bird():
 
         :param screen: pygame screen object
         """
-        pygame.draw.circle(
-            screen,
-            self.color,
-            (self.x, self.y),
-            self.radius,)
+        r = pygame.Rect(self.x-self.radius,
+                        self.y-self.radius,
+                        2*self.radius,
+                        2*self.radius)
+        screen.blit(self.image, r)
 
 
     def check_off_screen(self):

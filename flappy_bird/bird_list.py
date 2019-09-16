@@ -1,5 +1,7 @@
 import keras
 import gc
+import os
+import pygame
 import numpy as np
 import copy
 
@@ -9,8 +11,10 @@ import config
 class BirdList():
 
     def __init__(self):
-        self.alive = [Bird(color=config.BIRD_COLOR) for _ in range(config.BIRD_NR)]
+        self.bird_image = pygame.image.load(os.path.join("flappy_bird", "images", "fish.png"))
+        self.alive = [Bird(image=self.bird_image) for _ in range(config.BIRD_NR)]
         self.dead = []
+        self.max_score = 0
 
     def update(self, pipe_info):
         for b in self.alive:
@@ -46,6 +50,7 @@ class BirdList():
         weights_list = []
         weights_list = [np.array(l.get_weights()) for l in self.dead[0].model.layers]
         self.alive.append(self.dead[0])
+        self.max_score = self.alive[0].score
         self.alive[0].reset_bird()
         for b in self.dead[1:]:
             bird_weights_list = self.mutate(weights_list)
