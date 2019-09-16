@@ -46,7 +46,6 @@ class BirdList():
 
     def next_generation(self):
         self.dead.sort(key=lambda b: b.score, reverse=True)
-        print(f"Max score: {self.dead[0].score}")
         weights_list = []
         weights_list = [np.array(l.get_weights()) for l in self.dead[0].model.layers]
         self.alive.append(self.dead[0])

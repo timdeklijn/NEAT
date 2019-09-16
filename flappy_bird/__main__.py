@@ -1,4 +1,5 @@
 import sys
+import os
 import pygame
 
 # user inputs
@@ -12,6 +13,7 @@ from pipe_list import PipeList
 pygame.init()
 screen = pygame.display.set_mode((config.WIDTH, config.HEIGHT))
 pygame.display.set_caption('Flappy Fish')
+bg = pygame.image.load(os.path.join("flappy_bird", "images", "underwater.png"))
 
 # Game variables ==============================================================
 
@@ -43,7 +45,7 @@ while 1:
 
     # Draw Frame ==============================================================
 
-    screen.fill(config.BACKGROUND_COLOR)
+    screen.blit(bg, (0,0))
     pipe_list.draw(screen)
     bird_list.draw(screen)
     text = font.render(f"gen: {gen_num} score: {bird_list.alive[0].score} ({bird_list.max_score})",
@@ -53,4 +55,5 @@ while 1:
     screen.blit(text, text_rect)
     pygame.display.flip()
     pygame.time.wait(10)
+    gen_num += 1
 
