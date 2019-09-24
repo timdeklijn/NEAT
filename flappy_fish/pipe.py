@@ -23,5 +23,5 @@ class Pipe():
         r2 = pygame.Rect(self.x, self.y_bottom,
                          config.PIPE_WIDTH, config.HEIGHT - self.y_top)
         # Draw pipes
-        pygame.draw.rect(screen, (100, 200, 100), r1)
-        pygame.draw.rect(screen, (100, 200, 100), r2)
+        pygame.draw.rect(screen, (50, 150, 50), r1)
+        pygame.draw.rect(screen, (50, 150, 50), r2)
