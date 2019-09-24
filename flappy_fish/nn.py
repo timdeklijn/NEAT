@@ -18,8 +18,13 @@ class NN():
         self.model = Sequential()
         # outputs a layer with 7*[21] weights
         self.model.add(Dense(8, input_dim=4, activation="relu"))
-        # outputs a layer wit 32*[1] weights
-        self.model.add(Dense(16, input_dim=8, activation="relu"))
+
+        # =====================================================================
+        #
+        # Add aditional layers, or not
+        #
+        # =====================================================================
+
         self.model.add(Dense(1, input_dim=16, activation="softplus"))
         self.model.compile(loss="categorical_crossentropy",
                            optimizer=Adam(),
@@ -33,16 +38,14 @@ class NN():
         :param weights_list: list of weights
         :returns: weight_list with modified values
         """
-        chance = 0.05
-        mutate_range = 0.1
-        new_weights_list = []
-        for weights in weights_list:
-            new_weights = []
-            for w in weights:
-                rand_weights = (np.random.random(size=w.shape) - 0.5) * mutate_range
-                w = np.where(np.random.random(size=w.shape) < chance, w, w + rand_weights)
-                new_weights.append(w)
-            new_weights_list.append(new_weights)
+        new_weights_list = weights_list
+
+        # =====================================================================
+        #
+        # Mutate the weights 
+        #
+        # =====================================================================
+
         return new_weights_list
 
 
@@ -62,6 +65,13 @@ class NN():
             * Append all changed fish to self.alive (list of fish)
             * empty self.dead (list of fish)
         """
+
+        # =====================================================================
+        #
+        # Currently the whole next generation gets the weights of the 
+        # fittest fish. Mutate/mix weights to evolve the next generation
+        #
+        # =====================================================================
 
         # Sort fish on score
         self.dead.sort(key=lambda b: b.score, reverse=True)
