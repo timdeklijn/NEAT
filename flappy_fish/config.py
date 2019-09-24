@@ -6,9 +6,9 @@ Contains all global variables for flappy_bird
 # Sizes
 WIDTH = 400
 HEIGHT = 600
-# bird
+# fish
 CIRCLE_RADIUS = 20
-BIRD_NR = 30
+FISH_NR = 30
 # Pipes
 PIPE_WIDTH = 50
 HALF_GAP_SIZE = 100

@@ -6,10 +6,11 @@ from keras.layers import Dense, Activation
 from keras.optimizers import Adam
 
 import config
+from nn import NN
 
-class Bird():
+class Fish(NN):
     """
-    Bird class, predict action, update position and
+    Fish class, predict action, update position and
     draw the bird.
     """
 
@@ -17,6 +18,7 @@ class Bird():
         """
         :param color: rgb bird color
         """
+        super().__init__()
         self.image = image
         self.x = 2 * config.CIRCLE_RADIUS
         self.y = int(config.HEIGHT/2.0)
@@ -28,25 +30,8 @@ class Bird():
         self.create_NN()
 
 
-    def create_NN(self):
-        """Create neural network"""
-        self.model = Sequential()
-        # outputs a layer with 7*[21] weights
-        self.model.add(Dense(8, input_dim=4, activation="relu"))
-        # outputs a layer wit 32*[1] weights
-        self.model.add(Dense(16, input_dim=8, activation="relu"))
-        self.model.add(Dense(1, input_dim=16, activation="softplus"))
-        self.model.compile(loss="categorical_crossentropy",
-                           optimizer=Adam(),
-                           metrics=["accuracy"])
-
-
-    def change_weights(self, weights):
-       for i, layer in enumerate(self.model.layers):
-            layer.set_weights(weights[i])
-
-
-    def reset_bird(self):
+    def reset_fish(self):
+        """Reset Fish to start posistion"""
         self.y = int(config.HEIGHT/2.0)
         self.velocity = 0
         self.score = 0
@@ -54,7 +39,7 @@ class Bird():
 
     def draw(self, screen):
         """
-        Draw the bird object to the screen
+        Draw the Fish object to the screen
 
         :param screen: pygame screen object
         """
@@ -67,7 +52,7 @@ class Bird():
 
     def check_off_screen(self):
         """
-        Check if bird position is off screen
+        Check if Fish position is off screen
 
         :retrun: boolean, True when off screen
         """
@@ -77,8 +62,8 @@ class Bird():
 
     def update(self, pipe_info):
         """
-        predict action based on environment input, then
-        update acceleration, velocity and finally, bird position.
+        predict (using the Fish neural network) an action based on environment
+        input, then update acceleration, velocity and finally, bird position.
 
         :param pipe_info: tuple with environment variables
         """
@@ -89,11 +74,12 @@ class Bird():
         nn_input[0,2] = self.y - nn_input[0,2]
         nn_input[0,3] = self.y - nn_input[0,3]
         # Based on NN output, jump or not
+        # can only jump when fish is falling
         if self.model.predict(nn_input)[0,0] > 0.5 and self.velocity >= 0.0:
             self.acceleration += config.JUMP_FORCE
         else:
             self.acceleration += self.gravity_force
-        # Set new position
+        # update position
         self.velocity += self.acceleration
         self.y += int(self.velocity)
         self.acceleration = 0
