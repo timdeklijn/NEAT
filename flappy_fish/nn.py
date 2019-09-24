@@ -28,9 +28,10 @@ class NN():
 
     def mutate(self, weights_list):
         """
-        Mutate weights.
+        Mutate weights somehow.
 
-        Returns a weight list.
+        :param weights_list: list of weights
+        :returns: weight_list with modified values
         """
         chance = 0.05
         mutate_range = 0.1
