@@ -21,6 +21,7 @@ fish_list = FishList()
 pipe_list = PipeList()
 gen_num = 1
 font = pygame.font.Font("freesansbold.ttf", 20)
+c = 0
 
 # Start game loop =============================================================
 while 1:
@@ -45,15 +46,15 @@ while 1:
         gen_num += 1
 
     # Draw Frame ==============================================================
-
-    screen.blit(bg, (0,0))
-    pipe_list.draw(screen)
-    fish_list.draw(screen)
-    text = font.render(f"gen: {gen_num} score: {fish_list.alive[0].score} ({fish_list.max_score})",
-                       True, (250, 250, 200), None)
-    text_rect = text.get_rect()
-    text_rect.center = (config.WIDTH // 2, 30)
-    screen.blit(text, text_rect)
-    pygame.display.flip()
-    pygame.time.wait(10)
-
+    if c % 10 == 0:
+        screen.blit(bg, (0,0))
+        pipe_list.draw(screen)
+        fish_list.draw(screen)
+        text = font.render(f"gen: {gen_num} score: {fish_list.alive[0].score} ({fish_list.max_score})",
+                        True, (250, 250, 200), None)
+        text_rect = text.get_rect()
+        text_rect.center = (config.WIDTH // 2, 30)
+        screen.blit(text, text_rect)
+        pygame.display.flip()
+        pygame.time.wait(10)
+    c += 1
